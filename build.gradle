@@ -42,8 +42,8 @@ dependencies {
             "org.projectlombok:lombok:${lombokVersion}",
             "ch.qos.logback:logback-classic:${logbackVersion}"
 
-
     implementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: '4.0.19'
+    implementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
 }
 
 test {
