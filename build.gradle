@@ -41,9 +41,10 @@ dependencies {
             "org.assertj:assertj-core:${assertJVersion}",
             "org.projectlombok:lombok:${lombokVersion}",
             "ch.qos.logback:logback-classic:${logbackVersion}"
-
+    implementation group: 'net.serenity-bdd', name: 'serenity-reports', version: '4.0.19'
     implementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: '4.0.19'
     implementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
+
 }
 
 test {
@@ -58,5 +59,5 @@ serenity {
     // // Specify the root package of any JUnit acceptance tests
     testRoot="starter"
 }
-
+gradle.startParameter.continueOnFailure = true
 test.finalizedBy(aggregate)
