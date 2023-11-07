@@ -13,7 +13,7 @@ import java.util.Set;
 import static net.serenitybdd.rest.SerenityRest.*;
 
 //clase para llamar a la API HTTP
-public class UserApiActions extends UIInteractions { //clase que viene con Serenity BDD para ayudarnos a interactuar con las API.
+public class RegisterStep extends UIInteractions { //clase que viene con Serenity BDD para ayudarnos a interactuar con las API.
     private Usuario usuario;
 
 
