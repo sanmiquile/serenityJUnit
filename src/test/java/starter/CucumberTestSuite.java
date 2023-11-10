@@ -1,4 +1,4 @@
-package starter.step_Definitions;
+package starter;
 import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectClasspathResource;
