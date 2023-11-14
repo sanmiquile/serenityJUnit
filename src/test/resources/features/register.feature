@@ -5,11 +5,13 @@ Feature: Registro de usuarios
     When El usuario Invoco el servicio de registro
     Then El usuario Obtengo un status con codigo 201
     And El usuario La respuesta contiene los datos del usuario
+    And El usuario observa que la estructura cumple con el formato de "User"
 
   Scenario: Registrar usuario duplicado
     Given El usuario Soy un usuario ya registrado en sistema
     When El usuario Invoco el servicio de registro
     Then El usuario Obtengo un status con codigo 409
+    And  El usuario observa que la estructura cumple con el formato de "Error"
 
 
   Scenario: Registrar usuario campo faltante

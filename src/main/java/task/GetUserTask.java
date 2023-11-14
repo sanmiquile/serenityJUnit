@@ -1,13 +1,11 @@
 package task;
 
-import dtos.Usuario;
-import io.restassured.http.ContentType;
-import io.restassured.mapper.ObjectMapperType;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 import net.serenitybdd.screenplay.rest.interactions.Get;
-import net.serenitybdd.screenplay.rest.interactions.Post;
+
+import static util.Url.getBaseUrl;
 
 public class GetUserTask implements Task {
     private final String usuario;
@@ -22,7 +20,7 @@ public class GetUserTask implements Task {
     }
 
     public <T extends Actor> void performAs(T actor) {
-        actor.whoCan(CallAnApi.at("http://localhost:8090/api"));
+        actor.whoCan(CallAnApi.at(getBaseUrl()));
 
         actor.attemptsTo(
                 Get.resource("/usuarios/"+usuario)

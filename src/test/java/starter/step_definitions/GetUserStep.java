@@ -32,4 +32,19 @@ public class GetUserStep {
                 seeThat(theAttributeValue("roles").asListOf(String.class),equalTo(List.of("admin")))
         );
     }
+    @Given("{actor} no esta autorizado en el sistema")
+    public void el_admin_no_esta_autorizado_en_el_sistema(Actor actor) {
+        //actor.attemptsTo(TokenTask.withData(new UsuarioLogin("laura","laura")));
+        actor.remember("token","");
+    }
+
+    @Given("{actor} autenticado no tiene permisos")
+    public void el_admin_autenticado_no_tiene_permisos(Actor actor) {
+        actor.attemptsTo(TokenTask.withData(new UsuarioLogin("pecos14","pecos")));
+    }
+
+    @When("{actor} solicita informacion de usuario no existente")
+    public void el_admin_solicita_informacion_en_un_recursos_no_existente(Actor actor) {
+            actor.attemptsTo(GetUserTask.withData("ggfssd"));
+    }
 }
