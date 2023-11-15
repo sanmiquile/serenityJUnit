@@ -21,7 +21,8 @@ public class GetUserStep {
     }
 
     @When("{actor} solicita informacion de un usuario")
-    public void elAdminSolicitaInformacionDeUnUsuario(Actor actor) {
+    public void elAdminSolicitaInformacionDeUnUsuario(Actor actor)
+    {
         actor.attemptsTo(GetUserTask.withData("admin"));
     }
 
@@ -30,6 +31,7 @@ public class GetUserStep {
         actor.should(
                 seeThat(theAttributeValue("usuario"),equalTo("admin")),
                 seeThat(theAttributeValue("roles").asListOf(String.class),equalTo(List.of("admin")))
+                // TODO crear el datamager
         );
     }
     @Given("{actor} no esta autorizado en el sistema")

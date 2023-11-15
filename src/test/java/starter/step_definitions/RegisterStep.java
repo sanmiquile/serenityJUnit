@@ -30,6 +30,7 @@ public class RegisterStep extends UIInteractions { //clase que viene con Serenit
 
     @Given("{actor} registra un usuario no registrado en sistema")
     public void registarNoUsuario(Actor actor) {
+
         usuario = new Usuario(username, clave, List.of("user"));
     }
 
@@ -38,7 +39,7 @@ public class RegisterStep extends UIInteractions { //clase que viene con Serenit
         actor.attemptsTo(RegisterTask.withData(usuario));
     }
 
-    @Then("{actor} Obtengo un status con codigo {int}")
+    @Then("{actor} obtiene un status con codigo {int}")
     public void validarStatus(Actor actor, int status) {
         actor.should(seeThat("Código respuesta ", StatusCode.code(), equalTo(status)));
     }
