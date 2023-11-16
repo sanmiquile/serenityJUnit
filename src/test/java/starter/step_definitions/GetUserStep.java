@@ -1,52 +1,58 @@
 package starter.step_definitions;
 
-import dtos.UsuarioLogin;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import net.serenitybdd.annotations.Shared;
 import net.serenitybdd.screenplay.Actor;
 import task.GetUserTask;
 import task.TokenTask;
-
-import java.util.List;
+import util.DataProvider;
+import util.DataShared;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static questions.GetValueFromResponseBodyQuestion.theAttributeValue;
 
 public class GetUserStep {
-    @Given("{actor} esta autenticado en el sistema")
+    @Shared
+    private DataShared dataShared;
+    @Shared
+    private DataProvider dataProvider;
+
+    @Given("El {actor} esta autenticado en el sistema")
     public void elAdminEstaAutenticadoEnElSistema(Actor actor) {
-        actor.attemptsTo(TokenTask.withData(new UsuarioLogin("admin","admin")));
+        //var credential = dataProvider.getCredential(dataShared.usuario);
+        actor.attemptsTo(TokenTask.withData(dataShared.credenciales));
     }
 
-    @When("{actor} solicita informacion de un usuario")
-    public void elAdminSolicitaInformacionDeUnUsuario(Actor actor)
-    {
-        actor.attemptsTo(GetUserTask.withData("admin"));
+    @When("El {actor} solicita informacion de {string}")
+    public void elAdminSolicitaInformacionDeUnUsuario(Actor actor,String usuario) {
+        dataShared.usuario = dataProvider.getAdmin();
+        if( "el".equals(usuario) ){
+            usuario = dataShared.usuario.usuario();
+        }
+        actor.attemptsTo(GetUserTask.withData(usuario));
     }
 
-    @And("{actor} obtiene los datos del usuario")
+    @And("El {actor} obtiene los datos del usuario")
     public void elAdminObtieneLosDatosDelUsuario(Actor actor) {
         actor.should(
-                seeThat(theAttributeValue("usuario"),equalTo("admin")),
-                seeThat(theAttributeValue("roles").asListOf(String.class),equalTo(List.of("admin")))
+                seeThat(theAttributeValue("usuario"), equalTo(dataShared.usuario.usuario())),
+                seeThat(theAttributeValue("roles").asListOf(String.class), equalTo(dataShared.usuario.roles()))
                 // TODO crear el datamager
         );
     }
-    @Given("{actor} no esta autorizado en el sistema")
+
+    @Given("El {actor} no esta autenticado")
     public void el_admin_no_esta_autorizado_en_el_sistema(Actor actor) {
         //actor.attemptsTo(TokenTask.withData(new UsuarioLogin("laura","laura")));
-        actor.remember("token","");
+        actor.remember("token", "");
+        dataShared.usuario = dataProvider.getUser();
     }
 
-    @Given("{actor} autenticado no tiene permisos")
-    public void el_admin_autenticado_no_tiene_permisos(Actor actor) {
-        actor.attemptsTo(TokenTask.withData(new UsuarioLogin("pecos14","pecos")));
-    }
-
-    @When("{actor} solicita informacion de usuario no existente")
+    @When("El {actor} solicita informacion de usuario no existente")
     public void el_admin_solicita_informacion_en_un_recursos_no_existente(Actor actor) {
-            actor.attemptsTo(GetUserTask.withData("ggfssd"));
+        actor.attemptsTo(GetUserTask.withData(dataProvider.getUsername()));
     }
 }

@@ -1,7 +1,5 @@
 package task;
 
-import dtos.Usuario;
-import io.cucumber.cienvironment.internal.com.eclipsesource.json.JsonObject;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
 import net.serenitybdd.screenplay.Actor;
@@ -11,18 +9,17 @@ import net.serenitybdd.screenplay.rest.interactions.Put;
 
 import static util.Url.getBaseUrl;
 
-public class UpdateUserTask implements Task {
+public class UpdateUserTask<T> implements Task {
     private final String usuarioActual;
-    private final Usuario usuario;
-    public UpdateUserTask(String usuarioActual, Usuario usuario) {
+    private final T usuario;
+    public UpdateUserTask(String usuarioActual, T usuario) {
 
         this.usuarioActual = usuarioActual;
         this.usuario = usuario;
     }
 
-    public static UpdateUserTask withData(String usuarioActual,Usuario usuario) {
-
-        return new UpdateUserTask(usuarioActual,usuario);
+    public static <T> UpdateUserTask<T> withData(String usuarioActual,T usuario) {
+        return new UpdateUserTask<T>(usuarioActual,usuario);
     }
 
     public <T extends Actor> void performAs(T actor) {

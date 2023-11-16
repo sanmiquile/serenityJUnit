@@ -1,28 +1,45 @@
 package starter.step_definitions;
 
 import dtos.Usuario;
+import dtos.UsuarioIncompleto;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import net.serenitybdd.annotations.Shared;
 import net.serenitybdd.screenplay.Actor;
 import task.RegisterTask;
 import task.UpdateUserTask;
-
-import java.util.List;
+import util.DataProvider;
+import util.DataShared;
 
 public class UpdateUserStep {
 
-    private Usuario usuario;
-    private Usuario usuario2;
-    @Given("existe un usuario registrado en el sistema")
-    public void existe_un_usuario_registrado_en_el_sistema() {
-        usuario = new Usuario("sandra6", "12345", List.of("user"));
-        Actor.named("admin").attemptsTo(RegisterTask.withData(usuario));
+    //private Usuario usuario;
+    //private Usuario usuario2;
+    @Shared
+    private DataShared dataShared;
+    @Shared
+    private DataProvider dataProvider;
+    @Given("existe un {actor} registrado en el sistema")
+    public void existe_un_usuario_registrado_en_el_sistema(Actor actor) {
+        if( "admin".equals(actor.getName()) ){
+            dataShared.usuario = dataProvider.getAdmin();
+        } else {
+            dataShared.usuario = dataProvider.getUser();
+            actor.attemptsTo(RegisterTask.withData(dataShared.usuario));
+        }
+        dataShared.credenciales = dataProvider.getCredential(dataShared.usuario);
     }
 
-    @When("{actor} solicita actualizar el nombre de un usuario")
+    @When("El {actor} solicita actualizar un usuario")
     public void el_admin_solicita_actualizar_el_nombre_de_un_usuario(Actor actor) {
         // Write code here that turns the phrase above into concrete actions
-        usuario2 = new Usuario(usuario.usuario(), "sandra", usuario.roles());
-        actor.attemptsTo(UpdateUserTask.withData(usuario.usuario(),usuario2));
+        dataShared.usuario = new Usuario(dataShared.usuario.usuario(), dataProvider.getPassword(), dataShared.usuario.roles());
+        actor.attemptsTo(UpdateUserTask.withData(dataShared.usuario.usuario(), dataShared.usuario));
+    }
+
+    @When("El {actor} solicita actualizar un usuario con datos incompleto")
+    public void elAdminSolicitaActualizarLaClaveDeUnUsuarioConDatosIncompleto(Actor actor) {
+        var usuario = new UsuarioIncompleto(dataShared.usuario.usuario());
+        actor.attemptsTo(UpdateUserTask.withData(dataShared.usuario.usuario(), usuario));
     }
 }
