@@ -1,0 +1,24 @@
+{
+  "Message": {
+    "exclusiveMaximum": false,
+    "exclusiveMinimum": false,
+    "minLength": 0,
+    "uniqueItems": false,
+    "maxProperties": 0,
+    "minProperties": 0,
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string"
+      }
+    },
+    "nullable": false,
+    "readOnly": false,
+    "writeOnly": false,
+    "example": "{\"error\":\"Se produjo un error al procesar la solicitud\"}",
+    "deprecated": false
+  },
+  "required": [
+    "message"
+  ]
+}

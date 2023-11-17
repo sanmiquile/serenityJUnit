@@ -13,8 +13,6 @@ import util.DataShared;
 
 public class UpdateUserStep {
 
-    //private Usuario usuario;
-    //private Usuario usuario2;
     @Shared
     private DataShared dataShared;
     @Shared

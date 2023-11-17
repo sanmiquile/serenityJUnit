@@ -40,7 +40,6 @@ public class GetUserStep {
         actor.should(
                 seeThat(theAttributeValue("usuario"), equalTo(dataShared.usuario.usuario())),
                 seeThat(theAttributeValue("roles").asListOf(String.class), equalTo(dataShared.usuario.roles()))
-                // TODO crear el datamager
         );
     }
 
