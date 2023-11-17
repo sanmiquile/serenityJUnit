@@ -48,23 +48,16 @@ public class RegisterStep extends UIInteractions { //clase que viene con Serenit
 
     @And("El {actor} La respuesta contiene los datos del usuario")
     public void laRespuestaContieneUnUsuarioConLosDatosEnviados(Actor actor) {
-        //then().body("usuario", Matchers.equalTo(dataShared.usuario.usuario()));
-        //dataShared.usuario.roles().forEach(rol-> then().body("roles",Matchers.contains(rol)));
-//        var question = ResponseScheme.get();
 
         actor.should(
                 seeThat(theAttributeValue("usuario"),equalTo(dataShared.usuario.usuario())),
                 seeThat(theAttributeValue("roles").asListOf(String.class),equalTo(dataShared.usuario.roles()))
         );
-//        actor.should(
-//                seeThat(question,hasProperty("usuario",equalTo(dataShared.usuario.usuario()))),
-//                seeThat(question,hasProperty("roles",equalTo(dataShared.usuario.roles())))
-//        );
     }
 
     @Given("El {actor} Soy un usuario ya registrado en sistema")
     public void soy_un_usuario_ya_registrado_en_sistema(Actor actor) {
-        dataShared.usuario = new Usuario("pecos14", "pecos", Set.of("user"));
+        dataShared.usuario = new Usuario("pecos15", "pecos", Set.of("user"));
     }
 
     @Given("El {actor} Soy un usuario que me registro con campo faltante")
